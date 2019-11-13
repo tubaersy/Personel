@@ -1,0 +1,89 @@
+﻿
+@using PTS.Models;
+@model FAZLA_MESAI
+@{
+    ViewBag.Title = "Create";
+    List<PERSONEL> personel = ViewData["personel"] as List<PERSONEL>;
+}
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1> Fazla Mesai Oluştur/Düzenle</h1>
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-6 p-3 arkaplangolgeli">
+        @using (Html.BeginForm("Create", "FazlaMesai", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group col-12">
+                <label for="PERSONEL_REFNO" class="control-label col-3 font-weight-bold" style="justify-content: flex-start">Personel Adı :</label>
+                <select name="PERSONEL_REFNO" id="PERSONEL_REFNO" class="form-control col-9">
+                    @foreach (var k in personel)
+                    {
+                        if (Model.PERSONEL_REFNO == k.PERSONEL_REFNO)
+                        {
+                            <option selected value="@k.PERSONEL_REFNO">@k.ADI_SOYADI</option>
+                        }
+                        else
+                        {
+                            <option value="@k.PERSONEL_REFNO">@k.ADI_SOYADI</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Fazla Mesai Refno:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.FAZLA_MESAI_REFNO, new { htmlAttributes = new { @class = "form-control col-9", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.FAZLA_MESAI_REFNO, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Tarihi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+
+                @Html.EditorFor(model => model.TARIH, new { htmlAttributes = new { @class = "form-control col-9", @type = "date", @Value = Model.TARIH.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.TARIH, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Toplam Saat:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.TOPLAM_SAAT, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.TOPLAM_SAAT, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Açıklama:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.ACIKLAMA, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.ACIKLAMA, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Ay:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.AY, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.AY, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Yıl:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.YIL, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.YIL, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group row" style="margin-top:20px; margin-left:60px;">
+                <div class="col-6"></div>
+                <div class="col-4">
+                    <input type="submit" value="Kaydet" style="background-color: #4CAF50; color:white" class="btn btn-default p-2" />
+                </div>
+                <div class="col-2">
+                    @Html.ActionLink("Vazgeç", "Index", null, new { @style = "background-color: #da7c0c; color:white", @class = "btn btn-default p-2" })
+                </div>
+            </div>
+        }
+    </div>
+</div>

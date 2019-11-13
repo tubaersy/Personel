@@ -1,0 +1,124 @@
+﻿@using PTS.Models;
+@model EGITIM
+@{
+    ViewBag.Title = "Create";
+    List<PERSONEL> personel = ViewData["personel"] as List<PERSONEL>;
+}
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1>Eğitim Oluştur/Düzenle</h1>
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-6 p-3 arkaplangolgeli">
+
+        @using (Html.BeginForm("Create", "Egitim", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group col-12">
+
+                @Html.Label("Eğitim Refno:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.EGITIM_REFNO, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.EGITIM_REFNO, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Eğitim Durumu:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.DropDownList("EGITIM_DURUMU", new List<SelectListItem>
+                  {
+               new SelectListItem { Text = "Mezun", Value = "True", Selected=true},
+               new SelectListItem { Text = "Devam Ediyor", Value = "False"}
+               }, "Durumunu Seçiniz.")
+
+                @Html.ValidationMessageFor(model => model.EGITIM_DURUMU, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Üniversite:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.UNIVERSITE, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.UNIVERSITE, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Fakülte:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.FAKULTE, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.FAKULTE, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Bölüm:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.BOLUM, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.BOLUM, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Eğitim Derecesi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.DropDownList("OGRETIM_TIPI", new List<SelectListItem>
+                  {
+               new SelectListItem { Text = "Yüksek Lisans", Value = "1"},
+               new SelectListItem { Text = "Lisans", Value = "2"},
+               new SelectListItem { Text = "Ön Lisans", Value = "3"}
+               }, "Eğitim Derecesi Seçiniz. ")
+
+                @Html.ValidationMessageFor(model => model.OGRETIM_TIPI, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Eğitim Dili:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.OGRETIM_DILI, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.OGRETIM_DILI, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Diploma Notu:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.DIPLOMA_NOTU, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.DIPLOMA_NOTU, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Başlangıç Tarihi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+
+                @Html.EditorFor(model => model.BASLANGIC_TARIHI, new { htmlAttributes = new { @class = "form-control col-9", @type = "date", @Value = Model.BASLANGIC_TARIHI.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.BASLANGIC_TARIHI, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Bitiş Tarihi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+
+                @Html.EditorFor(model => model.BITIS_TARIHI, new { htmlAttributes = new { @class = "form-control col-9", @type = "date", @Value = Model.BITIS_TARIHI.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.BITIS_TARIHI, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group col-12">
+                <label for="PERSONEL_REFNO" class="control-label col-3 font-weight-bold" style="justify-content: flex-start">Personel Adı :</label>
+                <select name="PERSONEL_REFNO" id="PERSONEL_REFNO" class="form-control col-9">
+                    @foreach (var k in personel)
+                    {
+                        if (Model.PERSONEL_REFNO == k.PERSONEL_REFNO)
+                        {
+                            <option selected value="@k.PERSONEL_REFNO">@k.ADI_SOYADI</option>
+                        }
+                        else
+                        {
+                            <option value="@k.PERSONEL_REFNO">@k.ADI_SOYADI</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div  class="form-group row" style="margin-top:20px; margin-left:60px;">
+                <div class="col-6"></div>
+                <div class="col-4">
+                    <input type="submit" value="Kaydet" style="background-color: #4CAF50; color:white" class="btn btn-default p-2" />
+                </div>
+                <div class="col-2">
+                    @Html.ActionLink("Vazgeç", "Index", null, new { @style = "background-color: #da7c0c; color:white", @class = "btn btn-default p-2" })
+                </div>
+            </div>
+        }
+    </div>
+</div>

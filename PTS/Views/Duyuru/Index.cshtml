@@ -1,0 +1,63 @@
+﻿@using PTS.Models
+@model  IEnumerable<DUYURU>
+@{
+    ViewBag.Title = "Index";
+    string veri = ViewData["veri"].ToString();
+}
+
+    <div class="pt-5" style="margin-left:40px;">
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col" style="margin-left:20px;">
+                <h1>Duyuru Listesi</h1>
+            </div>
+            <div class="col" style="margin-left:20px;">
+                @using (Html.BeginForm("Search", "Duyuru", FormMethod.Post))
+                {
+                    <div class="form-group row">
+                        @Html.Label("Duyuru Başlığı:", htmlAttributes: new { @class = "form-control col font-weight-bold" })
+                        <div class="col">
+                            @Html.TextBox("txtAra", veri, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col">
+                            <input type="submit" value="Ara" class="btn btn-default p-2" />
+                            @Html.ActionLink("Yeni", "Create", null, new { @class = "btn btn-default p-2" })
+
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+<div class="col-md-12 border-radius-10" style="margin-left:40px;">
+    <table class="table">
+        <thead class="class=" thead-light"">
+            <tr class="font-weight-bold">
+                <th>DUYURU BAŞLIĞI</th>
+                <th>DUYURU İÇERİK</th>
+                <th> DÜZENLE</th>
+                <th> SİL</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>@Html.Raw(item.DUYURU_BASLIK)</td>
+        
+        <td>@Html.Raw(item.DUYURU_ICERIK)</td>
+        <td>
+            <button class="btn-duzenle">
+                @Html.ActionLink("DÜZENLE ", "Create", new { id = item.DUYURU_REFNO })
+            </button>
+        </td>
+        <td>
+            <button class="btn-sil">
+                @Html.ActionLink("SİL", "delete", new { id = item.DUYURU_REFNO }, new { onclick = "return confirm('Gerçekten silinsin mi?')" })
+            </button>
+
+        </td>
+    </tr>
+        }
+    </table>
+</div>
+

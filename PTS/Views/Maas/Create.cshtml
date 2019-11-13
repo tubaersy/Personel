@@ -1,0 +1,206 @@
+﻿
+@using PTS.Models;
+@model MAA
+@{
+    ViewBag.Title = "Create";
+    List<PERSONEL> personel = ViewData["personel"] as List<PERSONEL>;
+    List<PERSONEL> aylik_ucret = ViewData["aylik_ucret"] as List<PERSONEL>;
+}
+
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1> Maaş Oluştur/Düzenle</h1>
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-6 p-3 arkaplangolgeli">
+        @using (Html.BeginForm("Create", "Maas", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline", onsubmit = "return kontrolEt();" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group col-12">
+                @Html.Label("Maaş Refno:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "maas-ref" })
+                @Html.EditorFor(model => model.MAAS_REFNO, new { htmlAttributes = new { @id = "maas-ref", @class = "form-control col-9", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.MAAS_REFNO, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                <label for="DEPARTMAN_REFNO" class="control-label col-3 font-weight-bold justif-start" style="justify-content: flex-start">Personel Adı :</label>
+                <select name="PERSONEL_REFNO" id="personal_selectbox" class="form-control col-9">
+                    @foreach (var d in personel)
+                    {
+                        if (Model.PERSONEL_REFNO == d.PERSONEL_REFNO)
+                        {
+                            <option selected value="@d.PERSONEL_REFNO">@d.ADI_SOYADI</option>
+                        }
+                        else
+                        {
+                            <option value="@d.PERSONEL_REFNO">@d.ADI_SOYADI</option>
+                        }
+                    }
+                </select>
+            </div>
+
+
+            <div class="form-group col-12">
+                @Html.Label("Yıl:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "yil" })
+                @Html.EditorFor(model => model.YIL, new { htmlAttributes = new { @class = "form-control col-9", @id = "yil" } })
+                @Html.ValidationMessageFor(model => model.YIL, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Ay:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "ay" })
+                @Html.EditorFor(model => model.AY, new { htmlAttributes = new { @class = "form-control col-9", @id = "ay" } })
+                @Html.ValidationMessageFor(model => model.AY, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Hesaplanma Tarihi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "hesaplanma_tarihi" })
+                @Html.TextBoxFor(model => model.HESAPLAMA_TARIHI,
+                        new { @id = "hesaplanma_tarihi", @class = "form-control col-9", @type = "date", @Value = Model.HESAPLAMA_TARIHI.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.HESAPLAMA_TARIHI, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Avans:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "avans_input" })
+                @Html.EditorFor(model => model.AVANS, new { htmlAttributes = new { @class = "form-control col-9", @id = "avans_input" } })
+                @Html.ValidationMessageFor(model => model.AVANS, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12">
+                <div class="col-6"></div>
+                <div class="col-md-offset-2 col-6">
+                    <button style="margin-top:20px; background-color:#2196F3; color:white" class="btn btn-default p-2" onclick="personelSec()" type="button">Getir</button>
+                </div>
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Aylık Ücret:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <input class="form-control col-9" type="text" id="aylik_ucret" readonly />
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Fazla Mesai Ücreti:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.FAZLA_MESAI_UCRETI, new { htmlAttributes = new { @class = "form-control col-9", @id = "fazla_mesai", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.FAZLA_MESAI_UCRETI, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12" , style="margin-top:20px">
+                @Html.Label("Toplam Ücret:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.TOPLAM_UCRET, new { htmlAttributes = new { @class = "form-control col-9", @id = "toplam_ucret", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.TOPLAM_UCRET, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group row" style="margin-top:20px; margin-left:60px;">
+                <div class="col-6"></div>
+                <div class="col-4">
+                    <input type="submit" value="Kaydet" style="background-color: #4CAF50; color:white" class="btn btn-default p-2" />
+                </div>
+
+                @*<div class="col-4">
+                        @Html.ActionLink("Kaydet", "Index", "MAAS",null, new { @style = "background-color: #4CAF50; color:white", @class = "btn btn-default p-2" })
+                    </div>*@
+                <div class="col-2">
+                    @Html.ActionLink("Vazgeç", "Index", null, new { @style = "background-color: #da7c0c; color:white", @class = "btn btn-default p-2" })
+                </div>
+            </div>
+
+            <script>
+                var personelSelectbox = document.getElementById('personal_selectbox');
+                var avansInput = document.getElementById('avans_input');
+                var ayInput = document.getElementById('ay');
+                var yilInput = document.getElementById('yil');
+                var toplamInput = document.getElementById('toplam_ucret');
+
+                //return false olursa form durur true olursa backende kaydeder.
+                function kontrolEt() {
+                    var seciliDeger = seciliElemaniGetir();
+                    var maas = istekGonder('/Personel/Maas/', seciliDeger);
+
+
+
+                    if (avansInput.value >= maas / 2) {
+                        alert("Avans Değeri maaşın %50'sinden büyük olamaz!");
+
+                        return false;
+                    }
+
+                    if (!ay || !yil) {
+                        alert("Ay ve Yıl Boş olamaz");
+                        return false;
+                    }
+
+                    if (document.getElementById('aylik_ucret').value == "") {
+                        alert("Getir Tuşuna Basmayı Unuttunuz");
+                        return false;
+                    }
+
+
+
+                    return true;
+                };
+
+                function personelSec() {
+                    var ay = ayInput.value;
+                    var yil = yilInput.value;
+                    var avans = parseFloat(avansInput.value || 0);
+                    var toplamucret = 0;
+
+
+
+                    if (!ay || !yil) {
+                        alert("Ay ve Yıl Boş olamaz");
+                        return false;
+                    }
+
+
+
+
+                    var personel_refno = seciliElemaniGetir();
+                    var maas = parseFloat(istekGonder('/Personel/Maas/', personel_refno));
+                    var fazla_mesai = istekGonder("/FazlaMesai/ToplamSaat/", personel_refno + "?ay=" + ay + "&yil=" + yil);
+                    var fazla_mesai_ucreti = "Fazla Mesai bulunamadı";
+
+                    var aynitarih = istekGonder('/Personel/AyniTarih/', personel_refno + "?ay=" + ay + "&yil=" + yil);
+
+
+                    if (aynitarih != false) {
+                        alert("Bu tarihlerde aynı personele maaş verildi");
+
+                        return false;
+                    }
+
+
+                    if (avansInput.value >= maas / 2) {
+                        alert("Avans Değeri maaşın %50'sinden büyük olamaz!");
+
+                        return false;
+                    }
+
+                    if (fazla_mesai != "false") {
+                        fazla_mesai_ucreti = (maas * 5) / 100 * fazla_mesai;
+                        toplamucret = fazla_mesai_ucreti + maas + avans;
+                    }
+                    else {
+                        toplamucret = maas + avans;
+                    }
+
+                    toplamInput.value = parseFloat(toplamucret);
+                    document.getElementById('fazla_mesai').value = parseInt(fazla_mesai_ucreti);
+                    document.getElementById('aylik_ucret').value = parseInt(maas);
+                    return false;
+                }
+
+                function seciliElemaniGetir() {
+                    var secilenEleman = (typeof personelSelectbox.selectedIndex === 'undefined' ? window.event.srcElement : personelSelectbox);
+                    var seciliDeger = secilenEleman.value || secilenEleman.options[secilenEleman.selectedIndex].value;
+
+                    return seciliDeger;
+                }
+            </script>
+        }
+    </div>
+</div>

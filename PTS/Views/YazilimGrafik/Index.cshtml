@@ -1,0 +1,62 @@
+﻿@using PTS.Models;
+@model IEnumerable<PERSONEL>
+@{
+    ViewBag.Title = "Index";
+}
+
+<script type="text/javascript"></script>
+@Scripts.Render("~/bundles/jquery")
+
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="~/Scripts/linechart/highcharts.js"></script>
+<div id="container" style="min-width: 310px; height: 400px; margin-top:100px; margin-left: 200px"></div>
+
+
+<script>
+    $(document).ready(function () {
+        $.getJSON("/Yazilim/GetData", function (data) {
+            var Names = []
+            var Qts = []
+            for (var i = 0; i < data.length; i++) {
+                Names.push(data[i].name);
+                Qts.push(data[i].count);
+            }
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ' Yazılım Departmanı Ortalama Maaş Grafiği'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Ortalama Maaş'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: ' ',
+                    data: Qts
+                }]
+            });
+        });
+    });
+
+
+</script>
+
+

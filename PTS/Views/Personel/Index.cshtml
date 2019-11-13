@@ -1,0 +1,106 @@
+﻿@using PTS.Models;
+@model IEnumerable<PERSONEL>
+
+@{
+    ViewBag.Title = "Index";
+    string veri = ViewData["veri"].ToString();
+
+}
+
+<div class="pt-5" style="margin-left:40px; ">
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col" style="margin-left:20px;">
+            <h1>Personel Listesi</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col" style="margin-left:20px;">
+
+            @Html.ActionLink("PDF", "PrintAll", null, new { @class = "btn btn-default p-2" })
+            <button class="btn btn-default p-2" id="exportEcxel" onclick="exportExcelButton()">EXCEL</button>
+            <button class="btn btn-default p-2" id="exportWord" onclick="exportWordButton()">WORD</button>
+            @*@Html.ActionLink("EXCEL", "PersonelList", null, new { @class = "btn btn-default p-2" })*@
+            @*@Html.ActionLink("WORD", "PersonelList", null, new { @class = "btn btn-default p-2" })*@
+        </div>
+        <div class="col">
+            @using (Html.BeginForm("Search", "Personel", FormMethod.Post))
+            {
+                <div class="form-group row">
+                    @Html.Label("Personel Adı:", htmlAttributes: new { @class = "form-control col font-weight-bold" })
+                    <div class="col">
+                        @Html.TextBox("txtAra", veri, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col">
+                        <input type="submit" value="Ara" class="btn btn-default p-2" />
+                        @Html.ActionLink("Yeni", "Create", null, new { @class = "btn btn-default p-2" })
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 border-radius-10 " style="margin-left:40px;">
+    <table class="table">
+        <thead class="thead-light">
+            <tr class="font-weight-bold">
+                <th>CV</th>
+                <th>RESİM</th>
+                <th>ADI SOYADI</th>
+                <th>DEPARTMAN</th>
+                <th>E-MAİL</th>
+                <th>TELEFON</th>
+                <th>DÜZENLE</th>
+                <th>SİL</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <button class="btn-cv">
+                        @Html.ActionLink("CV", "CV", new { id = item.PERSONEL_REFNO })
+                    </button>
+                </td>
+
+                <td><img id="img@(@item.PERSONEL_REFNO)" class="personelresim" src="~/Images/@item.RESIM" /></td>
+                <td>
+                    @Html.DisplayFor(model => item.ADI_SOYADI)
+                </td>
+                <td>@Html.DisplayFor(model => item.DEPARTMAN.DEPARTMAN_ADI)</td>
+                <td>@Html.DisplayFor(model => item.EMAIL)</td>
+                <td>@Html.DisplayFor(model => item.TELEFON)</td>
+                <td>
+                    <button class="btn-duzenle">
+                        @Html.ActionLink("DÜZENLE ", "Create", new { id = item.PERSONEL_REFNO })
+                    </button>
+                </td>
+                <td>
+                    <button class="btn-sil" onclick="Sil()">
+                        SİL
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+    <div style="margin-left:1000px;">
+        @Html.Partial("_Sayfalama")
+    </div>
+</div>
+
+
+<script>
+    function exportExcelButton() {
+        window.location = '/Personel/ExportExcel';
+    };
+    function exportWordButton() {
+        window.location = '/Personel/ExportWord';
+    };
+
+    function Sil() {
+        alert("Personel Silinmez ! Önce Personelin Diğer Bilgilerini Siliniz.");
+    }
+</script>

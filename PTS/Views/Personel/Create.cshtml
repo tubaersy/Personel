@@ -1,0 +1,147 @@
+﻿@using PTS.Models;
+@model PERSONEL
+@{
+    ViewBag.Title = "Create";
+    List<DEPARTMAN> departman = ViewData["departman"] as List<DEPARTMAN>;
+    List<KULLANICI> kullanici = ViewData["kullanici"] as List<KULLANICI>;
+}
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1> Personel Oluştur/Düzenle</h1>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-6 p-3 arkaplangolgeli">
+        @using (Html.BeginForm("Create", "Personel", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group col-12">
+                @Html.Label("Personel Refno:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "personel-ref" })
+
+                @Html.EditorFor(model => model.PERSONEL_REFNO, new { htmlAttributes = new { @id = "personel-ref", @class = "form-control col-9", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.PERSONEL_REFNO, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Adı Soyadı:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "ad-soyad" })
+
+                @Html.EditorFor(model => model.ADI_SOYADI, new { htmlAttributes = new { @id = "ad-soyad", @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.ADI_SOYADI, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12">
+                <label for="DEPARTMAN_REFNO" class="control-label col-3 font-weight-bold justif-start" style="justify-content: flex-start">Departman Adı:</label>
+                <select name="DEPARTMAN_REFNO" id="DEPARTMAN_REFNO" class="form-control col-9">
+                    @foreach (var d in departman)
+                    {
+                        if (Model.DEPARTMAN_REFNO == d.DEPARTMAN_REFNO)
+                        {
+                            <option selected value="@d.DEPARTMAN_REFNO">@d.DEPARTMAN_ADI</option>
+                        }
+                        else
+                        {
+                            <option value="@d.DEPARTMAN_REFNO">@d.DEPARTMAN_ADI</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Doğum Tarihi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "dogum_tarihi" })
+
+                @Html.EditorFor(model => model.DOGUM_GUNU_TARIHI, new { htmlAttributes = new { @id = "dogum_tarihi", @class = "form-control col-9", @type = "date", @Value = Model.DOGUM_GUNU_TARIHI.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.DOGUM_GUNU_TARIHI, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Telefon:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "telefon" })
+
+                @Html.EditorFor(model => model.TELEFON, new { htmlAttributes = new { @id = "telefon", @class = "form-control col-9", @type = "tel" } })
+                @Html.ValidationMessageFor(model => model.TELEFON, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("E-Mail:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "email" })
+
+                @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @id = "email", @class = "form-control col-9", @type = "email" } })
+                @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                <label for="RESIM" class="control-label col-3 font-weight-bold" style="justify-content: flex-start">Resim1</label>
+                <input type="file" name="RESIM" id="RESIM" value="@Model.RESIM" class="form-control col-9" />
+                <div class="col-12 text-center">
+                    <img class="resim" src="~/images/@Model.RESIM" />
+                </div>
+            </div>
+
+            <div class="form-group col-12">
+                <label for="KULLANICI_REFNO" class="control-label col-3 font-weight-bold" style="justify-content: flex-start">Kullanıcı Adı :</label>
+                <select name="KULLANICI_REFNO" id="KULLANICI_REFNO" class="form-control col-9">
+                    @foreach (var k in kullanici)
+                    {
+                        if (Model.KULLANICI_REFNO == k.KULLANICI_REFNO)
+                        {
+                            <option selected value="@k.KULLANICI_REFNO">@k.KULLANICI_ADI</option>
+                        }
+                        else
+                        {
+                            <option value="@k.KULLANICI_REFNO">@k.KULLANICI_ADI</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("İşe Başlama Tarihi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "ise_baslama_tarihi" })
+                @Html.TextBoxFor(model => model.ISE_BASLAMA_TARIHI,
+          new { @class = "form-control col-9", @type = "date", @Value = Model.ISE_BASLAMA_TARIHI.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.ISE_BASLAMA_TARIHI, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("İşten Çıkma Tarihi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "isten_cikma_tarihi" })
+                @Html.TextBoxFor(model => model.ISTEN_CIKMA_TARIHI,
+          new { @class = "form-control col-9", @type = "date" })
+                @Html.ValidationMessageFor(model => model.ISTEN_CIKMA_TARIHI, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Durumu:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "durumu" })
+
+                @Html.DropDownList("DURUMU", new List<SelectListItem>
+                    {
+                   new SelectListItem { Text = "Çalışıyor", Value = "True", Selected=true},
+                   new SelectListItem { Text = "İşten Ayrıldı", Value = "False"}
+                   }, "Drurumunu Seçiniz.", new { @class = "form-control col-9" })
+
+                @Html.ValidationMessageFor(model => model.DURUMU, "", new { @class = "text-danger" })
+
+            </div>
+
+
+            <div class="form-group col-12">
+                @Html.Label("Aylık Ücret:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "aylik_ucret" })
+                @Html.EditorFor(model => model.AYLIK_UCRET, new { htmlAttributes = new { @id = "aylik_ucret", @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.AYLIK_UCRET, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group row" style="margin-top:20px; margin-left:60px;">
+                <div class="col-6"></div>
+                <div class="col-4">
+                    <input type="submit" value="Kaydet" style="background-color: #4CAF50; color:white" class="btn btn-default p-2" />
+                </div>
+                <div class="col-2">
+                    @Html.ActionLink("Vazgeç", "Index", null, new { @style = "background-color: #da7c0c; color:white", @class = "btn btn-default p-2" })
+                </div>
+            </div>
+        }
+    </div>
+</div>

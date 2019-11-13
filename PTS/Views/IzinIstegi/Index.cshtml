@@ -1,0 +1,97 @@
+﻿@using PTS.Helpers;
+@using PTS.Models;
+@{
+    ViewBag.Title = "Index";
+
+    string veri = ViewData["veri"].ToString();
+    var onay = ViewData["onay"];
+}
+@{
+    PROJE db = new PROJE();
+
+    KULLANICI k = SessionHelper<KULLANICI>.GetSessionItem("kullanici");
+
+    PERSONEL p = db.PERSONELs.Where(p1 => p1.KULLANICI_REFNO == k.KULLANICI_REFNO).FirstOrDefault();
+
+    List<IZIN> i = db.IZINs.Where(p2 => p2.PERSONEL_REFNO == p.PERSONEL_REFNO).ToList();
+
+}
+<div class="pt-5" style="margin-left:40px;">
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col" style="margin-left:20px;">
+            <h1>İzin İsteği</h1>
+        </div>
+        <div class="col" style="margin-left:20px;">
+            @using (Html.BeginForm("Search", "IzinIstegi", FormMethod.Post))
+            {
+                <div class="form-group row">
+                    @Html.Label("Personel Adı:", htmlAttributes: new { @class = "form-control col font-weight-bold" })
+                    <div class="col">
+                        @Html.TextBox("txtAra", veri, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col">
+                        <input type="submit" value="Ara" class="btn btn-default p-2" />
+                        @Html.ActionLink("Yeni", "Create", null, new { @class = "btn btn-default p-2" })
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="col-md-12 border-radius-10" style="margin-left:40px;">
+    <table class="table">
+        <thead class="class=" thead-light"">
+            <tr class="font-weight-bold">
+                <th>PERSONEL ADI</th>
+                <th>BAŞLANGIÇ TARİHİ</th>
+                <th>BİTİŞ TARİHİ</th>
+                <th>İZNİ İPTAL ET</th>
+                <th>İZİN KARTI</th>
+                <th>KALAN GÜN</th>
+            </tr>
+        </thead>
+        @foreach (var item in i)
+        {
+            <tr>
+
+                <td>@p.ADI_SOYADI</td>
+                <td>@Html.DisplayFor(model => item.BASLANGIC_TARIHI)</td>
+                <td>@Html.DisplayFor(model => item.BITIS_TARIHI)</td>
+                <td>
+                    <button class="btn-sil">
+                      @Html.ActionLink("İPTAL ET", "delete", new { id = item.IZIN_REFNO }, new { onclick ="return confirm ('Gerçekten silinsin mi?');" })
+                    </button>
+                </td>
+                <td>
+                    <button class="btn-kart">
+                        @Html.ActionLink("İZİN KARTI ", "IzinKarti", new { id = item.PERSONEL_REFNO })
+                    </button>
+                </td>
+                <td>
+                    <button class="btn-kalan">
+                        @Html.ActionLink("KALAN GÜN", "KalanGun", new { id = item.PERSONEL_REFNO })
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+<script>
+    function kontrolEt(izin_refno) {
+
+        var onay = istekGonder("/IzinOnay/Onay/", izin_refno);
+        if (onay == "false") {
+            alert("Onaylanan izni silemezsiniz!");
+        }
+        else {
+            istekGonder("/IzinIstegi/Delete/", izin_refno);
+            window.location = '/IzinIstegi/Index';
+        }
+    } 
+}
+</script>
+

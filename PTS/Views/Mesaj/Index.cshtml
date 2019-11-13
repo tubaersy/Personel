@@ -1,0 +1,62 @@
+﻿@using PTS.Helpers;
+@using PTS.Models;
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    PROJE db = new PROJE();
+
+    KULLANICI k = SessionHelper<KULLANICI>.GetSessionItem("kullanici");
+    PERSONEL p = new PERSONEL() { RESIM=""};
+    if (k!=null)
+    {
+        p = db.PERSONELs.Where(p1 => p1.KULLANICI_REFNO == k.KULLANICI_REFNO).FirstOrDefault();
+    }
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/mesaj/jquery-1.6.4.js"></script>
+    <script src="~/Scripts/mesaj/jquery.signalR-2.1.0.min.js"></script>
+    <script src="~/SignalR/Hubs"></script>
+    <script>
+        $(function () {
+
+            var chat = $.connection.chatHub;
+            var $username = $('#txtUsername');
+            var $message = $('#txtMessage');
+            var $messages = $('#messages');
+
+            $message.focus();
+
+            chat.client.sendMessage = function (name, message) {
+
+                $messages.append('<li><strong>' + name + '</strong>: ' + message + '</li>');
+            };
+
+            $.connection.hub.start().done(function () {
+                $('#btnSendMessage').click(function () {
+
+                    chat.server.send($username.val(), $message.val());
+
+                    $message.val('').focus();
+                });
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div>
+        <label style="margin-left:50px" for="txtUserName">Kullanıcı: </label> <input style="margin-left:10px;" id="txtUsername" name="txtUsername" type="text" value="@p.ADI_SOYADI" />
+        <br />
+        <label style="margin-left:50px" for="txtMessage">Mesaj: </label> <input style="margin-left:24px;" id="txtMessage" type="text"/> <button style="margin-left:40px;" id="btnSendMessage">Mesaj Yolla</button>
+    </div>
+    <div id="messages"></div>
+</body>
+</html>

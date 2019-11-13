@@ -1,0 +1,74 @@
+﻿@using PTS.Helpers;
+@using PTS.Models;
+@{
+    ViewBag.Title = "Index";
+    string veri = ViewData["veri"].ToString();
+}
+@{
+    PROJE db = new PROJE();
+
+    KULLANICI k = SessionHelper<KULLANICI>.GetSessionItem("kullanici");
+
+    PERSONEL p = db.PERSONELs.Where(p1 => p1.KULLANICI_REFNO == k.KULLANICI_REFNO).FirstOrDefault();
+
+    List<YABANCI_DIL> y = db.YABANCI_DIL.Where(p2 => p2.PERSONEL_REFNO == p.PERSONEL_REFNO).ToList();
+
+}
+    <div class="pt-5" style="margin-left:40px;">
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col" style="margin-left:20px;">
+                <h1>Yabancı Dil Bilgisi</h1>
+            </div>
+            <div class="col" style="margin-left:20px;">
+                @using (Html.BeginForm("Search", "YabancıDil", FormMethod.Post))
+                {
+                    <div class="form-group row">
+                        @Html.Label("Personel Adı:", htmlAttributes: new { @class = "form-control col font-weight-bold" })
+                        <div class="col">
+                            @Html.TextBox("txtAra", veri, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col">
+                            <input type="submit" value="Ara" class="btn btn-default p-2" />
+                            @Html.ActionLink("Yeni", "Create", null, new { @class = "btn btn-default p-2" })
+
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+<div class="col-md-12 border-radius-10" style="margin-left:40px;">
+    <table class="table">
+        <thead class="thead-light">
+            <tr class="font-weight-bold">
+                <th>ADI SOYADI</th>
+                <th>YABANCI DİL ADI</th>
+                <th>SEVİYESİ</th>
+                <th>DÜZENLE</th>
+                <th>SİL</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in y)
+        {
+    <tr>
+        <td>@p.ADI_SOYADI</td>
+        <td>@Html.DisplayFor(model => item.YABANCI_DIL_ADI)</td>
+        <td>@Html.DisplayFor(model => item.SEVIYESI)</td>
+        <td>
+            <button class="btn-duzenle">
+                @Html.ActionLink("DÜZENLE ", "Create", new { id = item.YABANCI_DIL_REFNO })
+            </button>
+        </td>
+        <td>
+            <button class="btn-sil">
+                @Html.ActionLink("SİL", "delete", new { id = item.YABANCI_DIL_REFNO }, new { onclick = "return confirm('Gerçekten silinsin mi?')" })
+            </button>
+        </td>
+    </tr>
+        }
+    </table>
+</div>

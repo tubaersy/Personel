@@ -1,0 +1,36 @@
+﻿@using PTS.Models;
+@using PTS.Helpers;
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    PROJE db = new PROJE();
+
+    KULLANICI k = SessionHelper<KULLANICI>.GetSessionItem("kullanici");
+
+    PERSONEL p = db.PERSONELs.Where(p1 => p1.KULLANICI_REFNO == k.KULLANICI_REFNO).FirstOrDefault();
+
+}
+
+<div class="col-md-12 border-radius-10">
+    <table class="table">
+        <thead class="class=" thead-light"">
+            <tr class="font-weight-bold">
+                <th>KULLANICI ADI</th>
+                <th>PAROLA</th>
+                <th> DÜZENLE</th>
+            </tr>
+        </thead>
+
+        <tr>
+            <th>@k.KULLANICI_ADI</th>
+            <th>@k.PAROLA</th>
+            <th>
+                <button class="btn-duzenle">
+                    @Html.ActionLink("DÜZENLE ", "Create", new { id = k.KULLANICI_REFNO })
+                </button>
+            </th>
+        </tr>
+
+    </table>
+</div>

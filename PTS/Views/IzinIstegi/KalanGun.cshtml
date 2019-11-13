@@ -1,0 +1,56 @@
+﻿@using PTS.Models;
+
+@model PERSONEL
+@{
+    ViewBag.Title = "IzinKarti";
+    List<IZIN> izin = ViewData["izin"] as List<IZIN>;
+    var toplamgun = ViewData["toplamgun"];
+}
+<div class="row">
+    <div class="arkaplangolgeli col-md-12">
+        <div class="list-group-item-heading col-md-12 text-center">
+            <h3>İletişim Bilgileri</h3>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <img class="img-circle col-md-12" src="~/Images/@Model.RESIM"><img />
+            </div>
+            <div class="col-md-9">
+                <div class="col-md-12">
+                    <h1>@Model.ADI_SOYADI</h1>
+                    <div class="col-md-6">
+                        <h6>E-posta Adresi</h6>
+                        <label>@Model.EMAIL</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 arkaplangolgeli">
+            <div class="list-group-item-heading col-md-12">
+
+                <div class="col-md-3">
+                    <img src="~/Images/izin.png" />
+                </div>
+
+                <div class="col-md-9">
+                    <h3>İzinlerim</h3>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <h6> Kalan İzin Gününüz</h6>
+                @{
+                    if (Convert.ToInt32(toplamgun) > 15)
+                    {
+                        <scipt>
+                            alert('gününüz doldu');
+                        </scipt>
+                    }
+                }
+                <label>15-@ViewData["toplamgun"]</label>
+            </div>
+
+        </div>
+
+    </div>
+</div>

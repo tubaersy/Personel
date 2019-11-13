@@ -1,0 +1,85 @@
+﻿@using PTS.Models;
+@model KULLANICI
+@{
+    ViewBag.Title = "Create";
+    List<YETKI_GRUBU> yetkigrubu = ViewData["yetkigrubu"] as List<YETKI_GRUBU>;
+}
+
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1>Kullanıcı Oluştur/Düzenle</h1>
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-6 p-3 arkaplangolgeli">
+
+        @using (Html.BeginForm("Create", "kullanici", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group col-12">
+                @Html.Label("Kullanıcı Refno:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.KULLANICI_REFNO, new { htmlAttributes = new { @class = "form-control col-9", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.KULLANICI_REFNO, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Kullanıcı Adı:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.KULLANICI_ADI, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.KULLANICI_ADI, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Parola:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.PAROLA, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.PAROLA, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Durumu:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start", @for = "durumu" })
+
+                @Html.DropDownList("DURUMU", new List<SelectListItem>
+                    {
+                   new SelectListItem { Text = "Çalışıyor", Value = "True", Selected=true},
+                   new SelectListItem { Text = "İşten Ayrıldı", Value = "False"}
+                   }, "Drurumunu Seçiniz.", new { @class = "form-control col-9" })
+
+                @Html.ValidationMessageFor(model => model.DURUMU, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-12">
+                <label for="YETKI_GRUBU_REFNO" class="control-label col-3 font-weight-bold" style="justify-content: flex-start">Yetki Grubu Adı :</label>
+                <select name="YETKI_GRUBU_REFNO" id="YETKI_GRUBU_REFNO" class="form-control col-9">
+                    @foreach (var y in yetkigrubu)
+                    {
+                        if (Model.YETKI_GRUBU_REFNO == y.YETKI_GRUBU_REFNO)
+                        {
+                            <option value="@y.YETKI_GRUBU_REFNO">@y.GRUP_ADI</option>
+                        }
+                        else
+                        {
+                            <option selected value="@y.YETKI_GRUBU_REFNO">@y.GRUP_ADI</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group row" style="margin-top:20px; margin-left:60px;">
+                <div class="col-6"></div>
+                <div class="col-4">
+                    <input type="submit" value="Kaydet" style="background-color: #4CAF50; color:white" class="btn btn-default p-2" />
+                </div>
+                <div class="col-2">
+                    @Html.ActionLink("Vazgeç", "Index", null, new { @style = "background-color: #da7c0c; color:white", @class = "btn btn-default p-2" })
+                </div>
+            </div>
+
+
+        }
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,140 @@
+﻿@using PTS.Models;
+@model IEnumerable<DEGERLENDIRME>
+@{
+    ViewBag.Title = "Index";
+    string veri = ViewData["veri"].ToString();
+}
+<div class="pt-5" style="margin-left:40px; ">
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col" style="margin-left:20px;">
+            <h1>Değerlendirme Listesi</h1>
+        </div>
+        <div class="col" style="margin-left:20px;">
+            @using (Html.BeginForm("Search", "Degerlendirme", FormMethod.Post))
+            {
+                <div class="form-group row">
+                    @Html.Label("Personel Adı:", htmlAttributes: new { @class = "form-control col font-weight-bold" })
+                    <div class="col">
+                        @Html.TextBox("txtAra", veri, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col">
+                        <input type="submit" value="Ara" class="btn btn-default p-2" />
+                        @Html.ActionLink("Yeni", "Create", null, new { @class = "btn btn-default p-2" })
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="col-md-12 border-radius-10" style="margin-left:40px;">
+    <table class="table">
+        <thead class="class=" thead-light"">
+            <tr class="font-weight-bold">
+                <th>PERSONEL</th>
+                <th>TARİH</th>
+                <th>İŞ BİLGİSİ</th>
+                <th>İŞ KALİTESİ</th>
+                <th>ZAMANLAMA</th>
+                <th>KAVRAMA</th>
+                <th>SORUMLULUK</th>
+                <th>İNİSİYATİF</th>
+                <th>ÖZVERİ</th>
+                <th>ÇALIŞMA ODAKLI</th>
+                <th>EKİP ÇALIŞMASI</th>
+                <th>YARATICILIK</th>
+                <th>DÜZENLE</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@Html.DisplayFor(model => item.PERSONEL.ADI_SOYADI)</td>
+                <td>@Html.DisplayFor(model => item.TARIH)</td>
+                <td>@Html.DisplayFor(model => item.IS_BILGISI)</td>
+                <td>@Html.DisplayFor(model => item.IS_KALITESI)</td>
+                <td>@Html.DisplayFor(model => item.ZAMANLAMA)</td>
+                <td>@Html.DisplayFor(model => item.KAVRAMA)</td>
+                <td>@Html.DisplayFor(model => item.SORUMLULUK)</td>
+                <td>@Html.DisplayFor(model => item.INISIYATIF)</td>
+                <td>@Html.DisplayFor(model => item.OZVERI)</td>
+                <td>@Html.DisplayFor(model => item.CALISMA_ODAKLI)</td>
+                <td>@Html.DisplayFor(model => item.EKIP_CALISMASI)</td>
+                <td>@Html.DisplayFor(model => item.YARATICILIK)</td>
+                <td>
+                    <button class="btn-duzenle">
+                        @Html.ActionLink("DÜZENLE ", "Create", new { id = item.DEGERLENDIRME_REFNO })
+                    </button>
+                </td>
+                <td>
+                    <button class="btn-sil">
+                        @Html.ActionLink("SİL", "delete", new { id = item.DEGERLENDIRME_REFNO }, new { onclick = "return confirm('Gerçekten silinsin mi?')" })
+                    </button>
+
+                </td>
+            </tr>
+        }
+    </table>
+    <div style="margin-left:1000px;">
+        @Html.Partial("_Sayfalama")
+    </div>
+</div>
+<div></div>
+<div></div>
+@Scripts.Render("~/bundles/jquery")
+
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="~/Scripts/linechart/highcharts.js"></script>
+<div id="container" style="min-width: 310px; height: 400px; margin-top:30px; margin-left:50px;"></div>
+
+
+<script>
+    $(document).ready(function () {
+        $.getJSON("/Degerlendirme/GetData", function (data) {
+            var Names = []
+            var Qts = []
+            for (var i = 0; i < data.length; i++) {
+                Names.push(data[i].name);
+                Qts.push(data[i].count);
+            }
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Değerlendirme Grafiği'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Toplam Puanı'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: ' ',
+                    data: Qts
+                }]
+            });
+        });
+    });
+
+
+</script>

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<PTS.Models.PERSONEL>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PersonelList</title>
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Print", "PrintAll")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ADI_SOYADI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOGUM_GUNU_TARIHI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TELEFON)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EMAIL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RESIM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISE_BASLAMA_TARIHI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISTEN_CIKMA_TARIHI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DURUMU)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ADI_SOYADI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DOGUM_GUNU_TARIHI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TELEFON)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMAIL)
+                </td>
+                <td>
+                    <img id="img@(@item.PERSONEL_REFNO)" class="personelresim" src="~/Images/@item.RESIM" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISE_BASLAMA_TARIHI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISTEN_CIKMA_TARIHI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DURUMU)
+                </td>
+               
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

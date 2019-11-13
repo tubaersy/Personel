@@ -1,0 +1,61 @@
+﻿
+@using PTS.Models;
+@model KULLANICI
+@{
+    ViewBag.Title = "Create";
+}
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1>Hesap Ayarları</h1>
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-6 p-3 arkaplangolgeli">
+        @using (Html.BeginForm("Create", "HesapAyarlari", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group col-12">
+                @Html.Label("Kullanıcı Refno:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold",@style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.KULLANICI_REFNO, new { htmlAttributes = new { @class = "form-control col-9", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.KULLANICI_REFNO, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Kullanıcı Adı:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.KULLANICI_ADI, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.KULLANICI_ADI, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Parola:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.PAROLA, new { htmlAttributes = new { @class = "form-control col-9" } })
+                @Html.ValidationMessageFor(model => model.PAROLA, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Yetki Grubu:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold",@style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.YETKI_GRUBU_REFNO, new { htmlAttributes = new { @class = "form-control col-9", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.YETKI_GRUBU_REFNO, "", new { @class = "text-danger" })
+
+            </div>
+            <div  class="form-group row" style="margin-top:20px; margin-left:60px;">
+                <div class="col-6"></div>
+                <div class="col-4">
+                    <input type="submit" value="Kaydet" style="background-color: #4CAF50; color:white" class="btn btn-default p-2" onclick="hesapAyarlari();" />
+                </div>
+                <div class="col-2">
+                    @Html.ActionLink("Vazgeç", "Index", "Home", null, new { @style = "background-color: #da7c0c; color:white", @class = "btn btn-default p-2" })
+                </div>
+            </div>
+
+
+        }
+    </div>
+</div>
+<script>
+    function hesapAyarlari() {
+        alert("Kayıt Başarılı!");
+        window.location = '/home/Index';
+    }
+</script>

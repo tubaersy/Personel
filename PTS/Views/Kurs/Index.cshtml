@@ -1,0 +1,83 @@
+﻿@using PTS.Helpers;
+@using PTS.Models;
+@{
+    ViewBag.Title = "Index";
+    string veri = ViewData["veri"].ToString();
+}
+@{
+    PROJE db = new PROJE();
+
+    KULLANICI k = SessionHelper<KULLANICI>.GetSessionItem("kullanici");
+
+    PERSONEL p = db.PERSONELs.Where(p1 => p1.KULLANICI_REFNO == k.KULLANICI_REFNO).FirstOrDefault();
+
+    List<KUR> c = db.KURS.Where(p2 => p2.PERSONEL_REFNO == p.PERSONEL_REFNO).ToList();
+
+}
+
+<div class="pt-5" style="margin-left:40px;">
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col" style="margin-left:20px;">
+            <h1>Kurs Listesi</h1>
+        </div>
+        <div class="col" style="margin-left:20px;">
+            @using (Html.BeginForm("Search", "Kurs", FormMethod.Post))
+            {
+                <div class="form-group row">
+                    @Html.Label("Kurs Adı:", htmlAttributes: new { @class = "form-control col font-weight-bold" })
+                    <div class="col">
+                        @Html.TextBox("txtAra", veri, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col">
+                        <input type="submit" value="Ara" class="btn btn-default p-2" />
+                        @Html.ActionLink("Yeni", "Create", null, new { @class = "btn btn-default p-2" })
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="col-md-12 border-radius-10" style="margin-left:40px;">
+    <table class="table">
+        <thead class="class=" thead-light"">
+            <tr class="font-weight-bold">
+                <th>KURS ADI</th>
+                <th>KURS SAATI</th>
+                <th>KURS YERI</th>
+                <th>BAŞLANGIÇ TARİHİ</th>
+                <th>BİTİŞ TARİHİ</th>
+                <th>PERSONEL ADI</th>
+                <th>DÜZENLE</th>
+                <th>SİL</th>
+            </tr>
+
+            @foreach (var item in c)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => item.KURS_ADI)</td>
+                    <td>@Html.DisplayFor(model => item.KURS_SAATI)</td>
+                    <td>@Html.DisplayFor(model => item.KURS_YERI)</td>
+                    <td>@Html.DisplayFor(model => item.BASLANGIC_TARIHI)</td>
+                    <td>@Html.DisplayFor(model => item.BITIS_TARIHI)</td>
+                    <td>@p.ADI_SOYADI</td>
+                    <td>
+                        <button class="btn-duzenle">
+                            @Html.ActionLink("DÜZENLE ", "Create", new { id = item.KURS_REFNO })
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn-sil">
+                            @Html.ActionLink("SİL", "delete", new { id = item.KURS_REFNO }, new { onclick = "return confirm('Gerçekten silinsin mi?')" })
+                        </button>
+
+                    </td>
+
+                </tr>
+            }
+    </table>
+</div>
+
+
+

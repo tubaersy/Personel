@@ -1,0 +1,299 @@
+﻿
+body {
+    padding-top: 0px;
+}
+
+#banner {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: white;
+    color: #478dad;
+    height: 50px;
+    line-height: 50px;
+}
+
+#login {
+    float: right;
+    color: #478dad;
+    font-size: 20px;
+    margin-top: 5px;
+    width: 50px;
+    border-radius: 30px;
+}
+
+.anacontainer {
+    background-color: #f7f7f9;
+}
+
+.arkaplangolgeli {
+    margin: 80px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.border-radius-10 {
+    border-radius: 10px;
+}
+
+.btn-cv {
+    background-color: #4dcbcb;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+    /* Darker background on mouse-over */
+    .btn-cv:hover {
+        color: black;
+    }
+
+.btn-duzenle {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+    /* Darker background on mouse-over */
+    .btn-duzenle:hover {
+        color: black;
+    }
+
+.btn-sil {
+    background-color: #e51c23;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.btn-kart {
+    background-color: #478dad;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.btn-kalan {
+    background-color: #da7c0c;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* Darker background on mouse-over */
+.btn-sil:hover {
+    color: black;
+}
+
+/*.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #2196F3;
+    padding-top: 40px;
+}*/
+
+
+
+/*.hide-menu {
+    color: white;
+    margin-top: 20px;
+}
+
+.sidenav span {
+    color: white;
+}*/
+
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+}
+
+.mavi-arkaplan {
+    background-color: #478dad !important;
+    font-size: 18px;
+    font-family: Calibri;
+}
+
+.left-nav-bar {
+    height: 100%;
+    font-size: 0.9rem;
+}
+
+
+@media screen and (max-width: 768px) {
+    .left-nav-bar {
+        height: 0
+    }
+}
+
+/*.sidenav a, .dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}*/
+
+/*.sidenav a:hover, .dropdown-btn:hover {
+        color: #f1f1f1;
+    }*/
+
+.active {
+    background-color: #3558cc;
+    color: white;
+}
+
+/*.dropdown-container {
+    display: none;
+    background-color: transparent;
+    padding-left: 8px;
+}
+
+    .dropdown-container a {
+        color: white;
+    }*/
+
+.fa-caret-down {
+    float: right;
+    padding-right: 8px;
+}
+
+/*#liste table {
+    background-color: #cbeded;
+    width: 100%;
+}
+
+    #liste table tr {
+        height: 25px;
+        line-height: 25px;
+    }
+
+        #liste table tr:nth-child(even) {
+            background-color: azure;
+        }
+
+        #liste table tr:nth-child(:odd) {
+            background-color: #ebf6ce;
+        }
+
+        #liste table tr:first-child {
+            background-color: #bbdbf2;
+        }
+
+        #liste table tr:hover:not(:first-child) {
+            background-color: #aadbfe;
+            cursor: pointer;
+        }*/
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+    a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+
+
+/*#arama {
+    height: 40px;
+    line-height: 20px;
+    background-color: #d7d7d7;
+    margin-bottom: 10px;
+    font-size: 14px;
+}*/
+
+.button {
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border: solid 1px #da7c0c;
+    background: #478dad;
+    text-align: center;
+    text-decoration: none;
+    font: 14px/100% Arial, Helvetica, sans-serif;
+    padding: .5em 2em .55em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .3em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+    .button:hover {
+        background: #f47c20;
+        background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f88e11));
+        background: -moz-linear-gradient(top, #f88e11, #f88e11);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f88e11');
+    }
+
+.personelresim {
+    height: 90px;
+    width: 90px;
+}
+
+.dogumgunuresim {
+    height: 90px;
+    width: 90px;
+    border-radius: 50px;
+}
+
+.cvresim {
+    height: 150px;
+    width: 150px;
+    border-radius: 100px;
+}
+
+#id {
+    text-align: center;
+}
+
+.dogumarkaplan {
+    background-color: #f7f7f9;
+}
+
+/*duyuru stilleri*/
+#sag {
+    float: right;
+    position: absolute;
+    right: -400px;
+    width: 600px;
+    top: 160px;
+}

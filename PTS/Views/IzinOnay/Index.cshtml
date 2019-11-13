@@ -1,0 +1,69 @@
+﻿@using PTS.Models;
+@model IEnumerable<IZIN>
+@{
+    ViewBag.Title = "Index";
+    string veri = ViewData["veri"].ToString();
+}
+    <div class="pt-5" style="margin-left:40px;">
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col" style="margin-left:20px;">
+                <h1>İzin Onayı</h1>
+            </div>
+            <div class="col" style="margin-left:20px;">
+                @using (Html.BeginForm("Search", "IzinOnay", FormMethod.Post))
+                {
+                    <div class="form-group row">
+                        @Html.Label("Personel Adı:", htmlAttributes: new { @class = "form-control col font-weight-bold" })
+                        <div class="col">
+                            @Html.TextBox("txtAra", veri, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col">
+                            <input type="submit" value="Ara" class="btn btn-default p-2" />
+                            @Html.ActionLink("Yeni", "Create", null, new { @class = "btn btn-default p-2" })
+
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-radius-10" style="margin-left:40px;">
+        <table class="table">
+            <thead class="class=" thead-light"">
+                <tr class="font-weight-bold">
+                    <th>PERSONEL ADI</th>
+                    <th>BAŞLANGIÇ TARİHİ</th>
+                    <th>BİTİŞ TARİHİ</th>
+                    <th>DURUM</th>
+                    <th>ONAY</th>
+                    <th>İPTAL</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@Html.DisplayFor(model => item.PERSONEL.ADI_SOYADI)</td>
+                    <td>@Html.DisplayFor(model => item.BASLANGIC_TARIHI)</td>
+                    <td>@Html.DisplayFor(model => item.BITIS_TARIHI)</td>
+                    <td>@Html.DisplayFor(model => item.DURUM.DURUM_ADI)</td>
+                    <td>
+                        <button class="btn-duzenle">
+                            @Html.ActionLink("ONAY ", "Create", new { id = item.IZIN_REFNO })
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn-sil">
+                            @Html.ActionLink("İPTAL", "delete", new { id = item.IZIN_REFNO }, new { onclick = "return confirm('Gerçekten silinsin mi?')" })
+                        </button>
+                    </td>
+
+                </tr>
+            }
+        </table>
+        <div style="margin-left:1000px;">
+            @Html.Partial("_Sayfalama")
+        </div>
+    </div>
+

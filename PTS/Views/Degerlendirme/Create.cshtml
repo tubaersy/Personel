@@ -1,0 +1,278 @@
+﻿
+@using PTS.Models;
+@model DEGERLENDIRME
+@{
+    ViewBag.Title = "Create";
+    List<PERSONEL> personel = ViewData["personel"] as List<PERSONEL>;
+}
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1> Değerlendirme Oluştur/Düzenle</h1>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-6 p-3 arkaplangolgeli">
+        @using (Html.BeginForm("Create", "Degerlendirme", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group col-12">
+
+                @Html.Label("Değerlendirme Refno:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                @Html.EditorFor(model => model.DEGERLENDIRME_REFNO, new { htmlAttributes = new { @class = "form-control col-9", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.DEGERLENDIRME_REFNO, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-12">
+                <label for="PERSONEL_REFNO" class="control-label col-3 font-weight-bold" style="justify-content: flex-start">Kullanıcı Adı :</label>
+                <select name="PERSONEL_REFNO" id="PERSONEL_REFNO" class="form-control col-9">
+                    @foreach (var k in personel)
+                    {
+                        if (Model.PERSONEL_REFNO == k.PERSONEL_REFNO)
+                        {
+                            <option selected value="@k.PERSONEL_REFNO">@k.ADI_SOYADI</option>
+                        }
+                        else
+                        {
+                            <option value="@k.PERSONEL_REFNO">@k.ADI_SOYADI</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Tarih:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+
+                @Html.EditorFor(model => model.TARIH, new { htmlAttributes = new { @class = "form-control col-9", @type = "date", @Value = Model.TARIH.ToString("yyyy-MM-dd") } })
+                @Html.ValidationMessageFor(model => model.TARIH, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("İş Bilgisi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-3">
+                    @Html.DropDownList("IS_BILGISI", new List<SelectListItem>
+                      {
+                   new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                    new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.IS_BILGISI, "", new { @class = "text-danger" })
+                </div>
+
+
+                @Html.Label("İş Kalitesi:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-3">
+                    @Html.DropDownList("IS_KALITESI", new List<SelectListItem>
+                      {
+                  new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                    new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.IS_KALITESI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group col-12">
+                @Html.Label("Zamanlama:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-md-3">
+                    @Html.DropDownList("ZAMANLAMA", new List<SelectListItem>
+                      {
+                   new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                   new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.ZAMANLAMA, "", new { @class = "text-danger" })
+                </div>
+
+
+
+
+                @Html.Label("Kavrama:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-md-3">
+                    @Html.DropDownList("KAVRAMA", new List<SelectListItem>
+                      {
+                  new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                   new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.KAVRAMA, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Sorumluluk:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-md-3">
+                    @Html.DropDownList("SORUMLULUK", new List<SelectListItem>
+                      {
+                  new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                    new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.SORUMLULUK, "", new { @class = "text-danger" })
+                </div>
+
+
+
+                @Html.Label("İnisiyatif:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-md-3">
+                    @Html.DropDownList("INISIYATIF", new List<SelectListItem>
+                      {
+                  new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                   new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.INISIYATIF, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-12">
+                @Html.Label("Özveri:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-md-3">
+                    @Html.DropDownList("OZVERI", new List<SelectListItem>
+               {
+                  new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                   new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.OZVERI, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.Label("Çalışma Odaklı:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-md-3">
+                    @Html.DropDownList("CALISMA_ODAKLI", new List<SelectListItem>
+               {
+                   new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                   new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.CALISMA_ODAKLI, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="form-group col-12">
+                @Html.Label("Ekip Çalışması:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-md-3">
+                    @Html.DropDownList("EKIP_CALISMASI", new List<SelectListItem>
+                      {
+                  new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                   new { @class = "form-control" })
+
+
+                    @Html.ValidationMessageFor(model => model.EKIP_CALISMASI, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.Label("Yaratıcılık:", htmlAttributes: new { @class = "control-label col-3 font-weight-bold", @style = "justify-content: flex-start" })
+                <div class="form-group col-md-3">
+                    @Html.DropDownList("YARATICILIK", new List<SelectListItem>
+                      {
+                   new SelectListItem { Text = "1"},
+                   new SelectListItem { Text = "2"},
+                   new SelectListItem { Text = "3"},
+                   new SelectListItem { Text = "4"},
+                   new SelectListItem { Text = "5"},
+                   new SelectListItem { Text = "6"},
+                   new SelectListItem { Text = "7"},
+                   new SelectListItem { Text = "8"},
+                   new SelectListItem { Text = "9"},
+                   new SelectListItem { Text = "10"}
+                   },
+                   new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.YARATICILIK, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row" style="margin-top:20px; margin-left:60px;">
+                <div class="col-6"></div>
+                <div class="col-4">
+                    <input type="submit" value="Kaydet" style="background-color: #4CAF50; color:white" class="btn btn-default p-2" />
+                </div>
+                <div class="col-2">
+                    @Html.ActionLink("Vazgeç", "Index", null, new { @style = "background-color: #da7c0c; color:white", @class = "btn btn-default p-2" })
+                </div>
+            </div>
+
+
+        }
+    </div>
+    </div>

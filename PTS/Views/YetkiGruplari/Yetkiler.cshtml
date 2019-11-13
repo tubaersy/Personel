@@ -1,0 +1,72 @@
+﻿@using PTS.Models;
+@model List<YETKI>
+@{
+    ViewBag.Title = "Yetkiler";
+    List<SAYFA> sayfalar = ViewData["sayfalar"] as List<SAYFA>;
+}
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1>Yetkileri Düzenle</h1>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-6 p-3 arkaplangolgeli">
+        <form method="post" action="~/YetkiGruplari/Kayit">
+            <input name="YETKI_GRUBU_REFNO" type="hidden" value="@ViewData["id"].ToString()" />
+            <table class="table">
+                <tr>
+                    <th>
+                        Sayfa Adı
+                    </th>
+                    <th>
+                        Okuma
+                    </th>
+                    <th>
+                        Kaydet
+                    </th>
+                    <th>
+                        Sil
+                    </th>
+                    <th>
+                        Yeni
+                    </th>
+                    <th>
+                        Ara
+                    </th>
+                </tr>
+
+                @foreach (var item in sayfalar)
+                {
+                    YETKI yetki = Model.Where(m => m.SAYFA_REFNO == item.SAYFA_REFNO).SingleOrDefault();
+                    if (yetki == null)
+                    {
+                        yetki = new YETKI();//HİÇ BU SAYFAYA AİT YETKİ KAYDI YOKSA ;
+                    }
+                    <tr>
+                        <td>
+                            @item.SAYFA_ADI
+                            <input name="SAYFA_REFNO@(@item.SAYFA_REFNO)" type="hidden" value="@item.SAYFA_REFNO" />
+
+                        </td>
+                        <td>
+                            <input type="checkbox" name="OKUMA@(@item.SAYFA_REFNO)" value="true" @(yetki.OKUMA == true ? "checked" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox" name="KAYDET@(@item.SAYFA_REFNO)" value="true" @(yetki.KAYDET == true ? "checked" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox" name="SIL@(@item.SAYFA_REFNO)" value="true" @(yetki.SIL == true ? "checked" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox" name="YENI@(@item.SAYFA_REFNO)" value="true" @(yetki.YENI == true ? "checked" : "") />
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ARAMA@(@item.SAYFA_REFNO)" value="true" @(yetki.ARAMA == true ? "checked" : "") />
+                        </td>
+                    </tr>
+                }
+            </table>
+            <input type="submit" value="Kaydet" />
+        </form>
+    </div>
+</div>

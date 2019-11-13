@@ -1,0 +1,72 @@
+﻿@using PTS.Models;
+@using PTS.Helpers;
+
+@{
+    ViewBag.Title = "Index";
+    string veri = ViewData["veri"].ToString();
+
+}
+@{
+    PROJE db = new PROJE();
+
+    KULLANICI k = SessionHelper<KULLANICI>.GetSessionItem("kullanici");
+
+    PERSONEL p = db.PERSONELs.Where(p1 => p1.KULLANICI_REFNO == k.KULLANICI_REFNO).FirstOrDefault();
+
+    List<MAA> m = db.MAAS.Where(p2 => p2.PERSONEL_REFNO == p.PERSONEL_REFNO).ToList();
+
+}
+
+<div class="pt-5" style="margin-left:40px;">
+    <div class="row" style="margin-bottom:20px;">
+        <div class="col" style="margin-left:20px;">
+            <h1>Maaşınız</h1>
+        </div>
+        
+    </div>
+</div>
+
+<div class="col-md-12 border-radius-10" style="margin-left:40px;">
+    <table class="table">
+        <thead class="class=" thead-light"">
+            <tr class="font-weight-bold">
+                <th>PERSONEL ADI</th>
+                <th>YIL</th>
+                <th>AY</th>
+                <th>AYLIK ÜCRET</th>
+                <th>AVANS</th>
+                <th>FAZLA MESAİ ÜCRETİ</th>
+                <th>TOPLAM ÜCRET</th>
+                <th>HESAPLAMA TARİHİ</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in m)
+        {
+    <tr>
+        <td>@p.ADI_SOYADI</td>
+        <td>
+            @Html.DisplayFor(model => item.YIL)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.AY)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.PERSONEL.AYLIK_UCRET)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.AVANS)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.FAZLA_MESAI_UCRETI)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.TOPLAM_UCRET)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.HESAPLAMA_TARIHI)
+        </td>
+    </tr>
+        }
+    </table>
+</div>

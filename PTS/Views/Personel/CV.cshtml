@@ -1,0 +1,283 @@
+﻿@using PTS.Models;
+
+@model PERSONEL
+@{
+    ViewBag.Title = "CV";
+    List<CALISTIGI_YER> calistigi_yer = ViewData["calistigi_yer"] as List<CALISTIGI_YER>;
+    List<YABANCI_DIL> yabanci_dil = ViewData["yabanci_dil"] as List<YABANCI_DIL>;
+    List<EGITIM> egitim = ViewData["egitim"] as List<EGITIM>;
+    List<KUR> kurs = ViewData["kurs"] as List<KUR>;
+    List<SERTIFIKA> sertifika = ViewData["sertifika"] as List<SERTIFIKA>;
+}
+<div class="row">
+    <div class="col-md-9"></div>
+    <div class="col-md-3">
+        @Html.ActionLink("PDF", "PrintCV/"+Model.PERSONEL_REFNO, null, new { @class = "btn btn-default p-2" })
+    </div>
+</div>
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1>CV Görüntüle</h1>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-8 p-3 arkaplangolgeli">
+        <div class="row list-group-item-heading text-center">
+            <h2 class="col">İletişim Bilgileri</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col-3">
+                        <img class="cvresim" src="~/Images/@Model.RESIM"><img />
+                    </div>
+
+                    <div class="col-9">
+                        <div class="row">
+                            <h2 class="font-weight-bold">@Model.ADI_SOYADI</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6>E-posta Adresi</h6>
+                                <p class="font-weight-bold">@Model.EMAIL</p>
+                            </div>
+                            <div class="col">
+                                <h6>Doğum Tarihi</h6>
+                                <p class="font-weight-bold">@Model.DOGUM_GUNU_TARIHI</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6>Telefon</h6>
+                                <p class="font-weight-bold">@Model.TELEFON</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6>Adres</h6>
+                                <p class="font-weight-bold">@Model.ADRES</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-8 p-3 arkaplangolgeli">
+        <div class="row list-group-item-heading ">
+            
+            <div class="col" style="margin-left:120px">
+                <img src="~/Images/deneyim.png" />
+            </div>
+
+            <div class="col-8" style="margin-top:15px">
+                <h2>İş Deneyimleri</h2>
+            </div>
+
+        </div>
+        @foreach (var d in calistigi_yer)
+        {
+            <div style="border-bottom: 1px solid black;margin: 0;" class="col">
+                <div class="row">
+                    <div class="col">
+                        <h6>Pozisyon</h6>
+                        <p class="font-weight-bold">@d.UNVANI</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h6>Firma Adı</h6>
+                        <p class="font-weight-bold">@d.ADI</p>
+                    </div>
+                    <div class="col">
+                        <h6>Şehir</h6>
+                        <p class="font-weight-bold">@d.SEHIR</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h6>Başlangıç Tarihi</h6>
+                        <p class="font-weight-bold">@d.BASLANGIC_TARIHI</p>
+                    </div>
+                    <div class="col">
+                        <h6>Bitiş Tarihi</h6>
+                        <p class="font-weight-bold">@d.BITIS_TARIHI</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-8 p-3 arkaplangolgeli">
+        <div class="row list-group-item-heading ">
+            <div class="col" style="margin-left:120px">
+                <img src="~/Images/egitim.png" />
+            </div>
+
+            <div class="col-8" style="margin-top:15px">
+                <h2>Eğitim Bilgileri</h2>
+            </div>
+
+        </div>
+
+        @foreach (var d in egitim)
+        {
+            <div style="border-bottom: 1px solid black;margin: 0;" class="col">
+                <div class="row">
+                    <div class="col">
+                        <h6>Üniversite</h6>
+                        <p class="font-weight-bold">@d.UNIVERSITE</p>
+                    </div>
+                    <div class="col">
+                        <h6>Fakülte</h6>
+                        <p class="font-weight-bold">@d.FAKULTE</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h6>Bölüm</h6>
+                        <p class="font-weight-bold">@d.BOLUM</p>
+                    </div>
+                    <div class="col">
+                        <h6>Diploma Notu</h6>
+                        <p class="font-weight-bold">@d.DIPLOMA_NOTU</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h6>Başlangıç Tarihi</h6>
+                        <p class="font-weight-bold">@d.BASLANGIC_TARIHI</p>
+                    </div>
+                    <div class="col">
+                        <h6>Bitiş Tarihi</h6>
+                        <p class="font-weight-bold">@d.BITIS_TARIHI</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h6>Öğretim Tipi</h6>
+                        <p class="font-weight-bold">@d.OGRETIM_TIPI</p>
+                    </div>
+                    <div class="col">
+                        <h6>Öğretim Dili</h6>
+                        <p class="font-weight-bold">@d.OGRETIM_DILI</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <div class="col-8 p-3 arkaplangolgeli">
+        <div class="row list-group-item-heading">
+            <div class="col" style="margin-left:120px">
+                <img src="~/Images/kurs.png" />
+            </div>
+            <div class="col-8" style="margin-top:15px">
+                <h2>Kurslar</h2>
+            </div>
+        </div>
+        @foreach (var d in kurs)
+        {
+            <div style="border-bottom: 1px solid black;margin: 0;" class="col">
+                <div class="row">
+                    <div class="col">
+                        <h6>Kurs Adı</h6>
+                        <p class="font-weight-bold">@d.KURS_ADI</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h6>Kurs Saati</h6>
+                        <p class="font-weight-bold">@d.KURS_SAATI</p>
+                    </div>
+                    <div class="col">
+                        <h6>Kurs Yeri</h6>
+                        <p class="font-weight-bold">@d.KURS_YERI</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h6>Başlangıç Tarihi</h6>
+                        <p class="font-weight-bold">@d.BASLANGIC_TARIHI</p>
+                    </div>
+                    <div class="col">
+                        <h6>Bitiş Tarihi</h6>
+                        <p class="font-weight-bold">@d.BITIS_TARIHI</p>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <div class="col-8 p-3 arkaplangolgeli">
+        <div class="row list-group-item-heading">
+            <div class="col" style="margin-left:120px">
+                <img src="~/Images/sertifika.png" />
+            </div>
+            <div class="col-8" style="margin-top:15px">
+                <h2>Sertifikalar</h2>
+            </div>
+
+        </div>
+        @foreach (var d in sertifika)
+        {
+            <div style="border-bottom: 1px solid black;margin: 0;" class="col">
+                <div class="row">
+                    <div class="col">
+                        <h6>Sertifika Adı</h6>
+                        <p class="font-weight-bold">@d.SERTIFIKA_ADI</p>
+                    </div>
+                    <div class="col">
+                        <h6>Alınan Kurum</h6>
+                        <p class="font-weight-bold">@d.ALINAN_KURUM</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h6>Alınan Tarihi</h6>
+                        <p class="font-weight-bold">@d.ALINAN_TARIHI</p>
+                    </div>
+                    <div class="col">
+                        <h6>Geçerlilik Süresi</h6>
+                        <p class="font-weight-bold">@d.GECERLILIK_SURESI</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-8 p-3 arkaplangolgeli">
+        <div class="row list-group-item-heading">
+            <div class="col" style="margin-left:120px">
+                <img src="~/Images/yabanci_dil.png" />
+            </div>
+            <div class="col-8" style="margin-top:15px">
+                <h3>Yabancı Dil</h3>
+            </div>
+        </div>
+        @foreach (var d in yabanci_dil)
+        {
+            <div style="border-bottom: 1px solid black;margin: 0;" class="col">
+                <div class="row">
+                    <div class="col">
+                        <h6>Dil</h6>
+                        <p class="font-weight-bold">@d.YABANCI_DIL_ADI</p>
+                    </div>
+                    <div class="col">
+                        <h6>Seviye</h6>
+                        <p class="font-weight-bold">@d.SEVIYESI</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

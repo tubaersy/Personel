@@ -1,0 +1,110 @@
+﻿@using PTS.Models;
+
+@model PERSONEL
+@{
+    ViewBag.Title = "IzinKarti";
+    List<IZIN> izin = ViewData["izin"] as List<IZIN>;
+}
+<div class="row" style="margin-bottom:20px;">
+    <div class="col" style="margin-left:60px;">
+        <h1>İzin Kartı</h1>
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-8 p-3 arkaplangolgeli">
+        <div class="row list-group-item-heading text-center">
+            <h2 class="col">İletişim Bilgileri</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col-3">
+                        <img class="cvresim" src="~/Images/@Model.RESIM"><img />
+                    </div>
+
+                    <div class="col-9">
+                        <div class="row">
+                            <h2 class="font-weight-bold">@Model.ADI_SOYADI</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6>E-posta Adresi</h6>
+                                <p class="font-weight-bold">@Model.EMAIL</p>
+                            </div>
+                            <div class="col">
+                                <h6>Doğum Günü Tarihi</h6>
+                                <p class="font-weight-bold">@Model.DOGUM_GUNU_TARIHI</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6>Telefon</h6>
+                                <p class="font-weight-bold">@Model.TELEFON</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6>Toplam Çalıştığı Gün</h6>
+                                <p class="font-weight-bold">@ViewData["isebaslama"]</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6>Adres</h6>
+                                <p class="font-weight-bold">@Model.ADRES</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8 p-3 arkaplangolgeli">
+        <div class="row list-group-item-heading ">
+
+            <div class="col" style="margin-left:120px">
+                <img src="~/Images/izin.png" />
+            </div>
+
+            <div class="col-8" style="margin-top:15px">
+                <h2>İzinlerim</h2>
+            </div>
+
+        </div>
+
+        @foreach (var d in izin)
+        {
+            if (d.DURUM.DURUM_ADI == "Onaylandı")
+            {
+                <div style="border-bottom: 1px solid black;margin: 0;" class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h6>İzin Başlangıç Tarihi</h6>
+                            <p class="font-weight-bold">@d.BASLANGIC_TARIHI</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h6>İzin Bitiş Tarihi</h6>
+                            <p class="font-weight-bold">@d.BASLANGIC_TARIHI</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h6>Kullanılanacak İzin Günü</h6>
+                            <p class="font-weight-bold">@d.GUN</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        <div class="col-md-3">
+            <h6> Toplam İzin Günü</h6>
+            <label>@ViewData["toplamgun"]</label>
+        </div>
+
+    </div>
+
+   
